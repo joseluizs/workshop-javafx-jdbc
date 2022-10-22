@@ -45,6 +45,9 @@ public class SellerListController implements Initializable, DataChangeListener {
 	private TableColumn<Seller, Integer> tableColumnId;
 
 	@FXML
+	private TableColumn<Seller, String> tableColumnName;
+
+	@FXML
 	private TableColumn<Seller, String> tableColumnEmail;
 
 	@FXML
@@ -52,9 +55,6 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 	@FXML
 	private TableColumn<Seller, Double> tableColumnBaseSalary;
-
-	@FXML
-	private TableColumn<Seller, String> tableColumnName;
 
 	@FXML
 	private TableColumn<Seller, Seller> tableColumnEDIT;
@@ -116,7 +116,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 			controller.setSeller(obj);
 			controller.setServices(new SellerService(), new DepartmentService());
 			controller.loadAssociatedObjects();
-			controller.subscribeDataCangeListener(this);
+			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 
 			Stage dialogStage = new Stage();
@@ -170,12 +170,11 @@ public class SellerListController implements Initializable, DataChangeListener {
 				setGraphic(button);
 				button.setOnAction(event -> removeEntity(obj));
 			}
-
 		});
 	}
 
 	private void removeEntity(Seller obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation ", "Are you sure to delete? ");
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
 
 		if (result.get() == ButtonType.OK) {
 			if (service == null) {
@@ -185,10 +184,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 				service.remove(obj);
 				updateTableView();
 			} catch (DbIntegrityException e) {
-				Alerts.showAlert("Error removing oject", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Error removing object", null, e.getMessage(), AlertType.ERROR);
 			}
-
 		}
 	}
-
 }
